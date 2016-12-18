@@ -206,9 +206,17 @@ dynamic? It's far away from being a dynamic configuration. Can you propose a
 solution to solve this?
 
 La question ***[m2]*** répond partiellement, à la question. Reste à savoir, d'où
-proviennent les variables d'environement $SX_PORT_3000_TCP_ADDR. Si nous
-affichons l'output de la commande `env` dans le conteneur `ha` nous obtenons
-ceci:
+proviennent les variables d'environement $SX_PORT_3000_TCP_ADDR.
+
+Premier réflexe, `grep`:
+
+```
+[crab1@unknown xyz]$ grep -nr '$S1_PORT$S1_PORT_3000_TCP_ADDR' .
+./Teaching-HEIGVD-AIT-2016-Labo-Docker/ha/scripts/run.sh:5:sed -i 's/<s1>/$S1_PORT_3000_TCP_ADDR/g' /usr/local/etc/haproxy/haproxy.cfg
+```
+
+Sans succès pour cette fois. Du coup nous affichons l'output de la commande
+`env` dans le conteneur `ha` nous obtenons ceci:
 
 ```
 S1_PORT_3000_TCP=tcp://172.17.0.2:3000
