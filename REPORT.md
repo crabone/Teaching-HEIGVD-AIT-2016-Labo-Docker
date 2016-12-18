@@ -2,9 +2,9 @@
 
 Lors du [précédent laboratoire](https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-AIT-2015-Labo-02),
 nous avions dû mettre en place, une petite infrastructure, composée d'un load
-balancer, et de deux noeuds contenant, une application web. Chaque élément,
+balancer, et de deux noeuds contenant une application web. Chaque élément,
 était modélisé, par un conteneur `docker`. Cette infrastructure minimaliste,
-nous permettait de tester, et de comprendre, les mécanismes internes du load
+nous permettait de tester, et de comprendre, les mécanismes internes d'un load
 balancer.
 
 Le présent laboratoire fait office de suite. Nous reprennons cette
@@ -614,7 +614,7 @@ changements.
 
 ![HAProxy dashboard](assets/img/6-haproxy_dashboard-3.png)
 
-Nous pouvons aussi noté le changement du `pid`. Comme nous redémarrons
+Nous pouvons aussi noter le changement du `pid`. Comme nous redémarrons
 `HAProxy`, alors son numéro d'identification de processus, change.
 
 > Give your own feelings about the final solution. Propose improvements or ways
@@ -638,6 +638,11 @@ soit nécessaire de le redémarrer, pour qu'il puisse prendre en compte la
 nouvelle configuration. Nous sommes conscient que cette solution n'est pas
 optimale, dans le cas où le temps de réponse et l'uptime soit un critère
 essentiel.
+
+Plus anécdotique, mais notable tout de même, les instructions de démarrage des
+conteneurs peut être améliorer. Nous pouvons, englober le tout dans un boucle,
+où nous n'aurions plus qu'à spécifier le nombre de noeud à démarrer. Cela
+éviterai une redondance de code.
 
 ## DIFFICULTÉS RENCONTRÉES
 
