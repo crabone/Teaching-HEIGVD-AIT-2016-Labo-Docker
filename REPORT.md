@@ -211,7 +211,7 @@ proviennent les variables d'environement $SX_PORT_3000_TCP_ADDR.
 Premier réflexe, `grep`:
 
 ```
-[crab1@unknown xyz]$ grep -nr '$S1_PORT$S1_PORT_3000_TCP_ADDR' .
+[crab1@unknown xyz]$ grep -nr '$S1_PORT_3000_TCP_ADDR' .
 ./Teaching-HEIGVD-AIT-2016-Labo-Docker/ha/scripts/run.sh:5:sed -i 's/<s1>/$S1_PORT_3000_TCP_ADDR/g' /usr/local/etc/haproxy/haproxy.cfg
 ```
 
