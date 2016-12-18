@@ -10,6 +10,11 @@ balancer.
 Le présent laboratoire fait office de suite. Nous reprennons cette
 infrastructure, pour l'améliorer.
 
+## ÉTUDIANTS
+
+* FRANCHINI Fabien ([@crab_one](https://twitter.com/crab_one))
+* HENNEBERGER Sébastien ([@Shen299](https://twitter.com/Shen299))
+
 ## TABLE DES MATIÈRES
 
 1. [Tâche 0 - Identification des problèmes et installation des outils](#t%C3%82che-0---identification-des-probl%C3%88mes-et-installation-des-outils)
@@ -21,11 +26,6 @@ infrastructure, pour l'améliorer.
 7. [Tâche 6 - Rafraîchissement automatique de la configuration du load balancer](#t%C3%82che-6---rafraichissement-automatique-de-la-configuration-du-load-balancer)
 8. [Difficultés rencontrées](#difficult%C3%89s-rencontr%C3%89es)
 9. [Conclusion](#conclusion)
-
-## ÉTUDIANTS
-
-* FRANCHINI Fabien ([@crab_one](https://twitter.com/crab_one))
-* HENNEBERGER Sébastien ([@Shen299](https://twitter.com/Shen299))
 
 ## TÂCHE 0 - IDENTIFICATION DES PROBLÈMES ET INSTALLATION DES OUTILS
 
