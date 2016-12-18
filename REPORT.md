@@ -513,7 +513,7 @@ changement dynamique de la liste des noeuds dans `/nodes` et
 `/usr/local/etc/haproxy/haproxy.cfg`. Si nous nous rendons dans le dashboard
 de `HAProxy`, nous obtenons les résultats suivants:
 
-![HAProxy dashboard](assets/img/5-haproxy_dashboard)
+![HAProxy dashboard](assets/img/5-haproxy_dashboard.png)
 
 Nous constatons que `HAProxy` n'a pas pris en compte les modifications de sa
 configuration. La tâche suivante nous permettra de corriger ce problème.
