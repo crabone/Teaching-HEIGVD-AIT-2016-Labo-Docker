@@ -614,11 +614,30 @@ changements.
 
 ![HAProxy dashboard](assets/img/6-haproxy_dashboard-3.png)
 
+Nous pouvons aussi noté le changement du `pid`. Comme nous redémarrons
+`HAProxy`, alors son numéro d'identification de processus, change.
+
 > Give your own feelings about the final solution. Propose improvements or ways
 to do the things differently. If any, provide references to your readings for
 the improvements.
 
-[réponse]
+Il est difficile de juger la présente solution. En effet, nous ne pensons pas
+avoir assez d'expérience pour pouvoir proposé d'alternative, meilleure.
+Cependant, nous pouvons relever quelques points:
+
+L'utilisation de `Serf` est très pratique et permet de bénéficier d'avantages
+notoires. Cependant, nous doutons de la pertinence, de cet outil dans le cas
+présent. Tous les noeuds ont connaissance de la présence des autres noeuds du
+réseau. Or est-ce une information pertinente ? Nous pensons que les noeuds de
+`HAProxy` n'ont pas besoin de cette information. Nous sommes tenté d'aborder la
+solution avec du `multicast`, mais cela requierai un nouveau protocole
+applicatif, lourd, entre les noeuds et le load balancer.
+
+Cette dernière tâche soulève aussi la problématique que pour que `HAProxy`, il
+soit nécéssaire de le redémarrer, pour qu'il puisse prendre en compte la
+nouvelle configuration. Nous sommes conscient que cette solution n'est pas
+optimale, dans le cas où le temps de réponse et l'uptime soit un critère
+essentiel.
 
 ## DIFFICULTÉS RENCONTRÉES
 
