@@ -7,7 +7,7 @@ balancer, et de deux noeuds contenant, une application web. Chaque élément,
 nous permettait de tester, et de comprendre, les mécanismes internes du load
 balancer.
 
-Pour le présent laboratoire fait office de suite. Nous reprennons cette
+Le présent laboratoire fait office de suite. Nous reprennons cette
 infrastructure, pour l'améliorer.
 
 ## ÉTUDIANTS
