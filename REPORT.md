@@ -207,13 +207,6 @@ fonctionne correctement. Les noeuds `s1` et `s2` sont présents.
 
 ![HAProxy dashboard](assets/img/0-haproxy_dashboard.png)
 
-> Give the URL of your repository URL in the lab report.
-
-Nous avons décidé de forker le repository source, et d'écrire le rapport de
-manipulation dans un fichier nommé `REPORT.md`, situé à la racine.
-
-https://github.com/crabone/Teaching-HEIGVD-AIT-2016-Labo-Docker
-
 ## TÂCHE 1 - AJOUT D'UN PROCESSUS SUPERVISEUR
 
 Dans ce chapitre, nous installons des outils permettant de résoudre les
