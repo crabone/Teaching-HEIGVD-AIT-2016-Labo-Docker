@@ -10,6 +10,8 @@ balancer.
 Le présent laboratoire fait office de suite. Nous reprennons cette
 infrastructure, pour l'améliorer.
 
+1. [Tâche 0 - Identification des problèmes et installation des outils](#t%C3%82che-0---identification-des-probl%C3%88mes-et-installation-des-outils)
+
 ## ÉTUDIANTS
 
 * FRANCHINI Fabien ([@crab_one](https://twitter.com/crab_one))
