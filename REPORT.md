@@ -225,7 +225,7 @@ Après avoir appliqué les modifications proposées, nous nous rendons une nouve
 fois sur le dashboard de `HAProxy`. Nous constatons que tout fonctionne
 correctement.
 
-![HAProxy dashboard](assets/img/report/1-haproxy_dashboard.png)
+![HAProxy dashboard](assets/img/1-haproxy_dashboard.png)
 
 Nous n'observons pas de différence notable, par rapport à la capture d'écran,
 précédente.
