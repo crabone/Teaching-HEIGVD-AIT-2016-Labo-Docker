@@ -104,6 +104,14 @@ backend nodes
     # http://cbonte.github.io/haproxy-dconv/configuration-1.5.html#4-http-request
     http-request set-header X-Forwarded-Port %[dst_port]
 
+    # Define the list of nodes to be in the balancing mechanism
+    # http://cbonte.github.io/haproxy-dconv/configuration-1.5.html#4-server
+    # HANDLEBARS START
+    {{#each addresses}}
+    server {{ host }} {{ ip }}:3000 check
+    {{/each}}
+    # HANDLEBARS END
+
 # Other links you will need later for this lab
 #
 # About cookies: http://cbonte.github.io/haproxy-dconv/configuration-1.5.html#4-cookie
