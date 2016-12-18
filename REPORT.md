@@ -73,6 +73,11 @@ docker rm -f s3 2>/dev/null || true
 docker run -d --name s1 softengheigvd/webapp
 docker run -d --name s2 softengheigvd/webapp
 docker run -d --name s3 softengheigvd/webapp
+
+# Run load balancer
+echo "************************  run haproxy  ************************"
+docker rm -f ha 2>/dev/null || true
+docker run -d  -p 80:80 -p 1936:1936 -p 9999:9999 --link s1 --link s2 --link s3 --name ha softengheigvd/ha
 ```
 
 De plus, pour faciliter la gestion de ces conteneurs, l'infrastructure
@@ -91,6 +96,11 @@ docker rm -f s3 2>/dev/null || true
 docker run -d --name s1 softengheigvd/webapp
 docker run -d --name s2 softengheigvd/webapp
 docker run -d --name s3 softengheigvd/webapp
+
+# Run load balancer
+echo "************************  run haproxy  ************************"
+docker rm -f ha 2>/dev/null || true
+docker run -d  -p 80:80 -p 1936:1936 -p 9999:9999 --link s1 --link s2 --link s3 --name ha softengheigvd/ha
 ```
 
 Nous remarquons, d'ores et déjà, à quel point il est fastidieux de mettre à
@@ -122,8 +132,8 @@ sed -i 's/<s3>/$S3_PORT_3000_TCP_ADDR/g' /usr/local/etc/haproxy/haproxy.cfg
 ```
 
 Ces commandes, substituent avec l'utilitaire `sed`, la chaîne de caractères
-`<s3>`, par une variable d'environnement nommé `$S3_PORT_3000_TCP_ADDR`, dans le
-fichier de configuration du load balancer.
+`<s3>`, par une variable d'environement nommé `$S3_PORT_3000_TCP_ADDR`, dans le
+fichier de configuration du load balancer (voir ***[m6]***).
 
 Comme la présente configuration n'est pas dynamique, il est impératif de
 reconstruire et redémarrer le conteneur contenant le load balancer.
@@ -195,7 +205,68 @@ replace these two lines.
 dynamic? It's far away from being a dynamic configuration. Can you propose a
 solution to solve this?
 
-[réponse]
+La question ***[m2]*** répond partiellement, à la question. Reste à savoir, d'où
+proviennent les variables d'environement $SX_PORT_3000_TCP_ADDR.
+
+Si nous affichons l'output de la commande `env` dans le conteneur `ha` nous
+obtenons ceci:
+
+```
+S1_PORT_3000_TCP=tcp://172.17.0.2:3000
+HAPROXY_MD5=21d35f114583ef731bc96af05b46c75a
+S2_ENV_NODE_VERSION=0.12.2
+HOSTNAME=d207894c9daf
+S2_PORT_3000_TCP_ADDR=172.17.0.3
+HAPROXY_MAJOR=1.5
+S1_PORT_3000_TCP_PORT=3000
+S2_PORT_3000_TCP=tcp://172.17.0.3:3000
+S1_NAME=/ha/s1
+S1_PORT_3000_TCP_PROTO=tcp
+S2_ENV_NPM_VERSION=2.9.1
+S2_PORT=tcp://172.17.0.3:3000
+S1_ENV_NODE_VERSION=0.12.2
+S2_NAME=/ha/s2
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PWD=/
+S2_PORT_3000_TCP_PORT=3000
+SHLVL=1
+HOME=/root
+S1_ENV_NPM_VERSION=2.9.1
+ROLE=balancer
+S1_PORT=tcp://172.17.0.2:3000
+S2_PORT_3000_TCP_PROTO=tcp
+HAPROXY_VERSION=1.5.18
+S2_ENV_ROLE=backend
+S1_PORT_3000_TCP_ADDR=172.17.0.2
+S1_ENV_ROLE=backend
+_=/usr/bin/env
+```
+
+Si nous répétons l'opération dans le conteneur `s1` nous obtenons:
+
+```
+NODE_VERSION=0.12.2
+HOSTNAME=6abf93313011
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PWD=/
+NPM_VERSION=2.9.1
+SHLVL=1
+HOME=/root
+ROLE=backend
+_=/usr/bin/env
+```
+
+Nous nous intérogons sur l'absence des variables dans le conteneurs `s1`.
+Enfait, lorsque nous démarrons le conteneur `ha`, nous lui passons comme
+argument `--link s1`. Cet argument va offrir la possibilité à `ha` de
+communiquer avec `s1`. Ainsi des variables d'environement facilitant cette
+connexion, vont être déclarés dans le conteneur `ha`. Du coup, cette
+configuration est très loin d'être dynamique. D'une part, elle repose uniquement
+sur le fonctionnement de `docker` (pas portable), et d'autre part, il faut
+impérativement relancer le conteneur `ha` en rajoutant un argument `--link` pour
+le nouveau noeud.
+
+La question **[m4]** tente de résoudre à ce problème.
 
 ### LIVRABLES
 
