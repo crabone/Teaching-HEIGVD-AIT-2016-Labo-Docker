@@ -549,14 +549,22 @@ files are expected.
 > Provide the list of files from the `/nodes` folder inside the ha container.
 One file expected with the command output.
 
+Nous constatons que l'ajout des noeuds est correctement pris en compte.
+
 * [Output de la commande `ls -l /nodes`](logs/task5/list_nodes)
 
 > Provide the configuration file after you stopped one container and the list of
 nodes present in the /nodes folder. One file expected with the command output.
 Two files are expected.
 
+Après, avoir stoppé le conteneur `s2`, nous constatons que cela a été
+correctement pris en compte.
+
 * [Logs haproxy.cfg après l'arrêt de s2](logs/task5/haproxy.cfg-after_s2_stops)
 * [Output de la commande `ls -l /nodes`](logs/task5/list_nodes-after_s2_stops)
+
+Attention tout de même, bien que les fichiers de configurations ont été
+modifiés, ils n'ont pas été pris en compte par le load balancer.
 
 > In addition, provide a log file containing the output of the docker ps
 console. One file expected.
