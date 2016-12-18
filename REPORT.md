@@ -634,7 +634,7 @@ solution avec du `multicast`, mais cela requierai un nouveau protocole
 applicatif, lourd, entre les noeuds et le load balancer.
 
 Cette dernière tâche soulève aussi la problématique que pour que `HAProxy`, il
-soit nécéssaire de le redémarrer, pour qu'il puisse prendre en compte la
+soit nécessaire de le redémarrer, pour qu'il puisse prendre en compte la
 nouvelle configuration. Nous sommes conscient que cette solution n'est pas
 optimale, dans le cas où le temps de réponse et l'uptime soit un critère
 essentiel.
