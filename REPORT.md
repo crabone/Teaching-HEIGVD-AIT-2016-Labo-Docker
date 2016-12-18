@@ -316,6 +316,10 @@ Nous n'avons pas remarqué d'erreurs. Le premier noeud `s1`, créé et rejoint l
 cluster, nommé "ha". Ensuite, les autres noeuds, rejoingnent sans souci, ce
 nouveau cluster.
 
+* [Logs de s1](logs/task2/s1)
+* [Logs de s2](logs/task2/s2)
+* [Logs de ha](logs/task2/ha)
+
 > Give the answer to the question about the existing problem with the current
 solution.
 
@@ -417,6 +421,10 @@ Ensuite, nous observons de manière détaillée, le comportement de `Serf`.
 Quand un nouveau noeud rejoint le cluster, le message `member-join` est
 propagé dans les noeuds existants.
 
+* [Logs de s1](logs/task3/s1)
+* [Logs de s2](logs/task3/s2)
+* [Logs de ha](logs/task3/ha)
+
 > Provide the logs from the `ha` container gathered directly from the
 `/var/log/serf.log` file present in the container. Put the logs in the `logs`
 directory in your repo.
@@ -427,6 +435,8 @@ Quand `ha` reçoit le message `member-join`, il exécute le script
 `serf agent`.
 
 Les logs contenus dans `/var/log/serf.log`, confirment ce comportement.
+
+[Logs de serf.log](logs/task3/ha.serf)
 
 ## TÂCHE 4 - UTILISATION D'UN MOTEUR DE TEMPLATE POUR LA GÉNÉRATION DES FICHIERS DE CONFIGURATION
 
@@ -470,6 +480,14 @@ files are expected.
 Nous constatons qu'à chaque fois qu'on conteneur démarre, le fichier est
 écrasé. Ce qui nous oblige de répéter la procédure proposée.
 
+* [Logs haproxy.cfg après le démarrage de ha](logs/task4/haproxy.cfg-after_ha_starts)
+* [Logs haproxy.cfg après le démarrage de s1](logs/task4/haproxy.cfg-after_s1_starts)
+* [Logs haproxy.cfg après le démarrage de s2](logs/task4/haproxy.cfg-after_s2_starts)
+* [Output de la commande `docker ps`](logs/task4/docker_ps)
+* [Output de la commande `docker inspect ha`](logs/task4/docker_inspect_ha)
+* [Output de la commande `docker inspect s1`](logs/task4/docker_inspect_s1)
+* [Output de la commande `docker inspect s2`](logs/task4/docker_inspect_s2)
+
 > Based on the three output files you have collected, what can you say about the
 way we generate it? What is the problem if any?
 
@@ -510,12 +528,25 @@ container after each step. Three files are expected.
 console and another file (per container) with `docker inspect <container>`. Four
 files are expected.
 
+* [Logs haproxy.cfg après le démarrage de ha](logs/task5/haproxy.cfg-after_ha_starts)
+* [Logs haproxy.cfg après le démarrage de s1](logs/task5/haproxy.cfg-after_s1_starts)
+* [Logs haproxy.cfg après le démarrage de s2](logs/task5/haproxy.cfg-after_s2_starts)
+* [Output de la commande `docker ps`](logs/task5/docker_ps)
+* [Output de la commande `docker inspect ha`](logs/task5/docker_inspect_ha)
+* [Output de la commande `docker inspect s1`](logs/task5/docker_inspect_s1)
+* [Output de la commande `docker inspect s2`](logs/task5/docker_inspect_s2)
+
 > Provide the list of files from the `/nodes` folder inside the ha container.
 One file expected with the command output.
+
+* [Output de la commande `ls -l /nodes`](logs/task5/list_nodes)
 
 > Provide the configuration file after you stopped one container and the list of
 nodes present in the /nodes folder. One file expected with the command output.
 Two files are expected.
+
+* [Logs haproxy.cfg après l'arrêt de s2](logs/task5/haproxy.cfg-after_s2_stops)
+* [Output de la commande `ls -l /nodes`](logs/task5/list_nodes-after_s2_stops)
 
 > In addition, provide a log file containing the output of the docker ps
 console. One file expected.
