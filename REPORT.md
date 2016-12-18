@@ -10,7 +10,17 @@ balancer.
 Le présent laboratoire fait office de suite. Nous reprennons cette
 infrastructure, pour l'améliorer.
 
+## TABLE DES MATIÈRES
+
 1. [Tâche 0 - Identification des problèmes et installation des outils](#t%C3%82che-0---identification-des-probl%C3%88mes-et-installation-des-outils)
+2. [Tâche 1 - Ajout d'un processus superviseur](#t%C3%82che-1---ajout-dun-processus-superviseur)
+3. [Tâche 2 - Ajout d'un outil pour la gestion des membres dans un cluster web](#t%C3%82che-2---ajout-dun-outil-pour-la-gestion-des-membres-dans-un-cluster-web)
+4. [Tâche 3 - Réaction aux changements des membres](#t%C3%82che-3---r%C3%89action-aux-changements-des-membres)
+5. [Tâche 4 - Utilisation d'un moteur de template pour la génération des fichiers de configuration](#t%C3%82che-4---utilisation-dun-moteur-de-template-pour-la-g%C3%89n%C3%89ration-des-fichiers-de-configuration)
+6. [Tâche 5 - Génération d'une nouvelle configuration, du load balancer, lors des changements de membres](#t%C3%82che-5---g%C3%89n%C3%89ration-dune-nouvelle-configuration-du-load-balancer-lors-des-changements-de-membres)
+7. [Tâche 6 - Rafraîchissement automatique de la configuration du load balancer](#t%C3%82che-6---rafraichissement-automatique-de-la-configuration-du-load-balancer)
+8. [Difficultés rencontrées](#difficult%C3%89s-rencontr%C3%89es)
+9. [Conclusion](#conclusion)
 
 ## ÉTUDIANTS
 
