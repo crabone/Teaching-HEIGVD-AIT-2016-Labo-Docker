@@ -595,7 +595,24 @@ experimentations like shutting down a node and starting more nodes.
 expected. You can provide one output per step of your experimentation according
 to your screenshots.
 
-[réponse]
+Pour l'expérience, nous lançons 4 applications web. Nous constatons que le load
+balancer fonctionne correctement.
+
+![HAProxy dashboard](assets/img/6-haproxy_dashboard.png)
+
+Voici l'output de la commande `docker ps`:
+
+* [Output de la commande `docker ps`](logs/task6/docker_ps)
+
+Si nous stoppons, deux noeuds, nous pouvons observer les changements dans le
+dashboard de `HAProxy`.
+
+![HAProxy dashboard](assets/img/6-haproxy_dashboard-2.png)
+
+Si nous rajoutons, un troisième noeuds, nous constatons aussi bien ces
+changements.
+
+![HAProxy dashboard](assets/img/6-haproxy_dashboard-3.png)
 
 > Give your own feelings about the final solution. Propose improvements or ways
 to do the things differently. If any, provide references to your readings for
