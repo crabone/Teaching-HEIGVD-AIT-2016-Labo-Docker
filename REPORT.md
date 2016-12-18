@@ -162,9 +162,14 @@ If no, what is missing / required to reach the goal? If yes, how to proceed to
 run for example a log forwarding process?
 
 En l'état actuel, la présente solution ne permet pas d'exécuter des processus de
-maintenance.
+maintenance. Nous sommes confrontés à deux problèmes. Le premier, est le fait
+d'exécuter plusieurs processus en parralèle dans un conteneur `docker`. Le
+deuxième, de mettre en place un conteneur qui va collecter les logs.
 
-....................
+Pour exécuter plusieurs processus en parralèle, nous proposons d'écrire un
+script, qui au lancement du conteneur, lance les applications (load balancer et
+applications web), et un service qui transmet les logs vers un autre conteneur,
+comme `rsyslog`.
 
 > **[m6]** In our current solution, although the load balancer configuration is
 changing dynamically, it doesn't follow dynamically the configuration of our
