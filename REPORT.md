@@ -276,7 +276,8 @@ Ensuite, au démarrage du conteneur, `S6` se chargera, d'exécuter tout les
 scripts, `run`.
 
 **Note:** Nous n'avons pas eu de diffulté pour réaliser cette étape. La
-procédure est guidée et nous permet d'éviter de faire certaines erreures.
+procédure est guidée et nous permet d'éviter de faire certaines erreures
+d'inatention.
 
 ## TÂCHE 2 - AJOUT D'UN OUTIL POUR LA GESTION DES MEMBRES DANS UN CLUSTER WEB
 
@@ -468,13 +469,136 @@ RUN command 3
 > There are also some articles about techniques to reduce the image size.
 Try to find them. They are talking about `squashing` or `flattening` images.
 
-[réponse]
+Premièrement nous devons différencier la notion d'images et de conteneurs
+`docker`. Une image est une superposition de systèmes de fichier en lecture
+seule. Un conteneur, est une image dont la couche supérieure est accèssible
+en écriture.
+
+Chaque instruction contenue dans un `Dockerfile` représente une couche d'un
+conteneur ou d'une image.
+
+Si nous utilisons le modèle où nous avons des instructions séparées comme:
+
+```
+RUN command 1
+RUN command 2
+RUN command 3
+```
+
+Cette méthode présente plusieurs avantages. D'une part ce mécanisme profite
+au mieux des mécanismes de caching. Si une couche a déjà été générer lors d'un
+build, alors elle sera réutilisée lors d'un prochain build. De plus, comme la
+documentation l'indique, cela nous offre un gain de sécurité. Chaque couche
+est signée, du coup l'intégrité des données est préservée. Cette solution
+présente l'avantage que ces couches peuvent être partagés pour le build de
+conteneurs différents, selon la documentation officielle. Son principal
+défaut, est la multiplication des couches dans une image. De ce fait, nous
+obtenons des images plus volumineuses.
+
+Si nous utilisons le modèle où nous avons des instructions imbriquées comme:
+
+```
+RUN command 1 && command 2 && command 3
+```
+
+Comme nous avons pu le constater, vu que l'instruction `RUN` a été modifiée
+alors elle a été entièrement rejouée.
+
+Dans le cas présent, nous ne pensons pas que ce soit un problème. Durant ce
+laboratoire, nous avons eu à modifier considérablement le fichier `Dockerfile`.
+Nous pourrions être tenté de prendre une autre direction et rajouter une
+instruction `RUN` comme suit:
+
+```
+RUN apt-get -y install xz-utils
+```
+
+Or cela n'est pas logique. Est-il nécessaire de générer une couche (en plus des
+précédentes), qui contient uniquement `xz-utils`, juste pour profiter du
+caching ? Si nous avions eu à former un fichier `Dockerfile` sans cette
+procédure pas-à-pas nous aurions déjà regroupé ces instructions. Par contre,
+nous pouvons constater que cette méthode peut nous permettre de réduire la
+taille des images `docker`, car moins de couches sont générés.
+
+Pour illustrer cette réduction de taille, nous prenons pour exemple,
+l'installation de `Serf`.
+
+```
+RUN mkdir /opt/bin \
+&& curl -sSLo /tmp/serf.gz https://releases.hashicorp.com/serf/0.7.0/serf_0.7.0_linux_amd64.zip \
+&& gunzip -c /tmp/serf.gz > /opt/bin/serf \
+&& chmod 755 /opt/bin/serf \
+&& rm -f /tmp/serf.gz
+```
+
+Si nous avions modifié l'instruction comme suit:
+```
+RUN mkdir /opt/bin \
+&& curl -sSLo /tmp/serf.gz https://releases.hashicorp.com/serf/0.7.0/serf_0.7.0_linux_amd64.zip \
+&& gunzip -c /tmp/serf.gz > /opt/bin/serf \
+&& chmod 755 /opt/bin/serf \
+
+RUN rm -f /tmp/serf.gz
+```
+
+Nous aurons obtenu une image plus volumineuse. En effet, nous générons une
+couche supplémentaire, pour supprimer un fichier. Pour rappel, chaque couche
+est en lecture seule, du coup l'instruction `RUN rm -f /tmp/serf.gz` ne va
+pas effacer les fichiers de la couche inférieure, ***mais les masquer***.
+
+Nous préconisons une attitude pragmatique, et des compromis. La séparation
+des instructions `RUN`, est utile pour différencier des opérations distinctes.
+Tandis que nous imbriquons des opérations logiques (entre elles).
+
+Comme par exemple:
+
+```
+RUN téléchargement d'un paquet compressé && décompression du paquet &&
+installation du paquet && nettoyage
+
+RUN téléchargement d'un deuxième paquet compressé && décompression du paquet
+&& installation du paquet && nettoyage
+```
+
+Et non:
+```
+RUN téléchargement d'un paquet compressé
+RUN décompression du paquet
+RUN installation du paquet
+RUN nettoyage
+
+RUN téléchargement d'un deuxième paquet compressé
+RUN décompression du paquet
+RUN installation du paquet
+RUN nettoyage
+```
+
+Ou encore:
+
+```
+RUN téléchargement d'un paquet compressé && téléchargement d'un deuxième paquet compressé
+
+RUN décompression du premier paquet && décompression du deuxième paquet
+
+RUN installation du premier paquet && installation du deuxième paquet
+
+RUN nettoyage
+```
+
+Concernant le `squashening` et le `flattening`, ce sont des méthodes pour
+réduire la taille d'une image `docker`. Pour résumer, le `squashening` est une
+méthode qui analyse les couches d'une image, et supprime les opérations
+redondantes ([Plus d'infos](https://www.ianlewis.org/en/creating-smaller-docker-images-part2)).
+
+Le `flattening` consiste à le dénuder de son historique dans le but d'aplatir
+son image. ([Plus d'infos](http://tuhrig.de/flatten-a-docker-container-or-image/))
 
 > Propose a different approach to architecture our images to be able to reuse as
 much as possible what we have done. Your proposition should also try to avoid as
 much as possible repetitions between your images.
 
-[réponse]
+Ici, nous avons pour but, de factoriser au maximum les images `docker`, pour
+minimiser les opérations et bénéficier au mieux des mécanismes de caching.
 
 > Provide the `/tmp/haproxy.cfg` file generated in the `ha` container after each
 step. Place the output into the `logs` folder like you already did for the
@@ -622,7 +746,7 @@ to do the things differently. If any, provide references to your readings for
 the improvements.
 
 Il est difficile de juger la présente solution. En effet, nous ne pensons pas
-avoir assez d'expérience pour pouvoir proposé d'alternative, meilleure.
+avoir assez d'expérience pour pouvoir proposer de meilleures alternatives.
 Cependant, nous pouvons relever quelques points:
 
 L'utilisation de `Serf` est très pratique et permet de bénéficier d'avantages
@@ -633,8 +757,8 @@ réseau. Or est-ce une information pertinente ? Nous pensons que les noeuds de
 solution avec du `multicast`, mais cela requierai un nouveau protocole
 applicatif, lourd, entre les noeuds et le load balancer.
 
-Cette dernière tâche soulève aussi la problématique que pour que `HAProxy`, il
-soit nécessaire de le redémarrer, pour qu'il puisse prendre en compte la
+Cette dernière tâche soulève aussi la problématique que pour `HAProxy`, il
+soit nécessaire de le redémarrer pour qu'il puisse prendre en compte la
 nouvelle configuration. Nous sommes conscient que cette solution n'est pas
 optimale, dans le cas où le temps de réponse et l'uptime soit un critère
 essentiel.
