@@ -361,6 +361,10 @@ maintenable pour toutes les raisons citées plus haut.
 
 ## TÂCHE 3 - RÉACTION AUX CHANGEMENTS DES MEMBRES
 
+Dans ce chapitre, nous allons nous attarder sur la configuration de `Serf` et
+ainsi voir comment déclancher des actions, lorsqu'un nouveau noeud, rejoint le
+cluster.
+
 ### LIVRABLES
 
 > Provide the docker log output for each of the containers: ha, s1 and s2. Put
@@ -439,6 +443,9 @@ Les logs contenus dans `/var/log/serf.log`, confirment ce comportement.
 [Logs de serf.log](logs/task3/ha.serf)
 
 ## TÂCHE 4 - UTILISATION D'UN MOTEUR DE TEMPLATE POUR LA GÉNÉRATION DES FICHIERS DE CONFIGURATION
+
+Dans ce chapitre, nous allons poser les base pour la mise à jours automatique de
+la configuration du load balancer, lorsqu'un nouveau noeud rejoint le cluster.
 
 ### LIVRABLES
 
@@ -519,6 +526,9 @@ Container 95c9910e024f has joined the Serf cluster with the following IP address
 
 ## TÂCHE 5 - GÉNÉRATION D'UNE NOUVELLE CONFIGURATION, DU LOAD BALANCER, LORS DES CHANGEMENTS DE MEMBRES
 
+Dans ce chapitre, nous allons continuer le travail fait lors de la tâche
+précédente, et ainsi générer une nouvelle configuration pour le load balancer.
+
 ### LIVRABLES
 
 > Provide the file `/usr/local/etc/haproxy/haproxy.cfg` generated in the `ha`
@@ -562,6 +572,10 @@ Nous constatons que `HAProxy` n'a pas pris en compte les modifications de sa
 configuration. La tâche suivante nous permettra de corriger ce problème.
 
 ## TÂCHE 6 - RAFRAICHISSEMENT AUTOMATIQUE DE LA CONFIGURATION DU LOAD BALANCER
+
+Dans ce chapitre, nous allons mettre en place le mécanisme qui permet de prendre
+en compte, automatiquement, les modifications de la configuration du load
+balancer.
 
 ### LIVRABLES
 
