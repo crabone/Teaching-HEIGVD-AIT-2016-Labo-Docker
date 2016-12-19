@@ -682,7 +682,7 @@ much as possible repetitions between your images.
 Ici, nous avons pour but, de factoriser au maximum les images `docker`, pour
 minimiser les opérations et bénéficier au mieux des mécanismes de caching.
 
-**Nous avons longtemps planché sur le sujet et malgrés la lecture de la
+Nous avons longtemps planché sur le sujet et malgrés la lecture de la
 documentation nous n'avons pas trouvé de technique simple pour répondre à cette
 question. Nous savons que nous avons en commum: NodeJS, S6 et Serf. Nous
 sommes tentés de créer un `Dockerfile` propre à leurs installation. Or nous ne
@@ -706,7 +706,7 @@ vagrant@ubuntu-14:~$ docker history softengheigvd/webapp | grep s6.tar.gz
 Nous nous attendions à ce que ces deux calques partagent le même hash (et du
 coup ils sont identiques). Or ce n'est pas le cas. Malgrés toute la
 documentation lue, nous sommes dans l'incapacité de répondre concrètement à
-cette question.**
+cette question.
 
 > Provide the `/tmp/haproxy.cfg` file generated in the `ha` container after each
 step. Place the output into the `logs` folder like you already did for the
