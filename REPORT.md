@@ -193,6 +193,9 @@ script, qui au lancement du conteneur, lance les applications (load balancer et
 applications web), et un service qui transmet les logs vers un autre conteneur,
 comme `rsyslog`.
 
+Attention tout de même, à ce que le script persiste. Si il prend fin alors le
+conteneur sera tué, même si d'autres processus sont en cours d'exécution.
+
 > **[m6]** In our current solution, although the load balancer configuration is
 changing dynamically, it doesn't follow dynamically the configuration of our
 distributed system when web servers are added or removed. If we take a closer
