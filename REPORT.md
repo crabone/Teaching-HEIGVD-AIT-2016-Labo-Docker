@@ -682,6 +682,32 @@ much as possible repetitions between your images.
 Ici, nous avons pour but, de factoriser au maximum les images `docker`, pour
 minimiser les opérations et bénéficier au mieux des mécanismes de caching.
 
+**Nous avons longtemps planché sur le sujet et malgrés la lecture de la
+documentation nous n'avons pas trouvé de technique simple pour répondre à cette
+question. Nous savons que nous avons en commum: NodeJS, S6 et Serf. Nous
+sommes tentés de créer un `Dockerfile` propre à leurs installation. Or nous ne
+savons ensuite pas comment l'utiliser. Pour `ha`, son `Dockerfile` dépend de
+`haproxy:1.5` du coup, comment peut-on déclarer notre nouveau `Dockerfile`
+comme dépendance ? `docker` ne permet pas d'avoir de multiples dépendances sur
+le même `Dockerfile`.
+
+Ensuite, nous nous sommes basé sur la [référence fournie](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#images-and-layers).
+Nous avons utilisé la commande `docker history` pour voir si les 2 images
+possedaient des calques en commum voici un extrait de l'output de l'installation
+de `S6`:
+
+```
+vagrant@ubuntu-14:~$ docker history softengheigvd/ha | grep s6.tar.gz
+59e08f858ca4        18 hours ago        /bin/sh -c curl -sSLo /tmp/s6.tar.gz https://   4.375 MB            
+vagrant@ubuntu-14:~$ docker history softengheigvd/webapp | grep s6.tar.gz
+59841ff95bed        20 hours ago        /bin/sh -c curl -sSLo /tmp/s6.tar.gz https://   4.375 MB
+```
+
+Nous nous attendions à ce que ces deux calques partagent le même hash (et du
+coup ils sont identiques). Or ce n'est pas le cas. Malgrés toute la
+documentation lue, nous sommes dans l'incapacité de répondre concrètement à
+cette question.**
+
 > Provide the `/tmp/haproxy.cfg` file generated in the `ha` container after each
 step. Place the output into the `logs` folder like you already did for the
 Docker logs in the previous tasks. Three files are expected.
@@ -867,6 +893,12 @@ La principale difficulté, était la rédaction du rapport. Comme l'énoncé est
 complet et que les questions sont liées, nous avons eu du mal à rédiger un
 rapport pertinent, sans trop de répétitions.
 
+Nous avons aussi eu de la peine à répondre à la deuxième question de tâche n°4.
+
 ## CONCLUSION
 
-Nous avons eu beaucoup de plaisir à réaliser ce laboratoire.
+Nous avons trouvé ce laboratoire très intéressant et moderne. Nous pensons que
+`docker`, ou plus généralement les conteneurs, est une technologie d'avenir. Ce
+projet nous a permis de creuser le sujet et bien observer en profondeur ses
+mécanismes internes. En fin compte, nous avons eu beaucoup de plaisir à réaliser
+ce laboratoire.
